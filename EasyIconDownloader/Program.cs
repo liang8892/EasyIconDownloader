@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
+using Microsoft.Extensions.Configuration;
 
 namespace EasyIconDownloader
 {
@@ -9,10 +11,10 @@ namespace EasyIconDownloader
     {
         private const string APIURL = "https://www.easyicon.net/api/resizeApi.php?id={id}&size={size}";
 
-        private static List<int> PixeList = new List<int>()
-        {
-            16, 24, 32, 48, 64, 72, 96, 128
-        };
+        // private static List<int> PixeList = new List<int>()
+        // {
+        //     16, 24, 32, 48, 64, 72, 96, 128, 256, 512
+        // };
 
 
         static void Main(string[] args)
@@ -37,23 +39,8 @@ namespace EasyIconDownloader
             Console.WriteLine("File name:");
             var fileName = Console.ReadLine();
             
-            //Console.WriteLine("Pixe:");
-            //b = int.TryParse(Console.ReadLine(), out int pxInt);
-            //if (!b)
-            //{
-            //    Console.WriteLine("Not a px.");
-            //    return;
-            //}
-
-            //Console.WriteLine("Icon type 0-PNG, 1-ICO, 2-ICNS:");
-            //b = int.TryParse(Console.ReadLine(), out int iconInt);
-            //IconTypeEnum iconType = (IconTypeEnum) iconInt;
-            //if (!b)
-            //{
-            //    Console.WriteLine("Not a icon type:");
-            //    return;
-            //}
-
+            List<int> PixeList = ConfigurationHelper.GetValue<List<int>>("PixeList");
+            
             var dir = $"d:\\EasyIcon\\{id}_{fileName}\\";
             if (!Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
